@@ -1,10 +1,12 @@
 def sum_equals(a):
+    """Summiert alle Zahlen in der Liste a."""
     sum = 0
     for x in a:
         sum += x
     return sum
 
 def count_int(a):
+    """Zählt wie viele Integer in der Liste a sind."""
     count = 0
     for x in a:
         if isinstance(x, int):
@@ -12,6 +14,7 @@ def count_int(a):
     return count
 
 def print_3and7(min, max):
+    """Gibt aus welche Zahlen zwischen min und max durch 3 oder 7 teilbar sind."""
     output = []
     for x in range(min, max+1):
         if x % 3 == 0 or x % 7 == 0:
@@ -19,15 +22,18 @@ def print_3and7(min, max):
     return output
 
 def reverse_list(a):
+    """Dreht die Liste a um."""
     return a[::-1]
 
 def is_n_times(s, n, sn):
+    """Prüft ob sn herauskommt wenn man s n-mal kopiert."""
     if sn == s*n:
         return True
     else:
         return False
 
 def print_graph(a):
+    """Gibt einen Graphen aus in dem pro Zahl Rauten ausgegeben werden."""
     for x in a:
         current = ""
         for y in range(int(x*10)):
@@ -35,7 +41,8 @@ def print_graph(a):
         print(current)
 
 def to_str(x, y, z):
-    return "(" + str(x) + ", " + str(y) + ", " + str(z) + ") = (" + format(x, 'x') + ", " + format(y, 'x') + ", " + format(z, 'x') + ")"
+    """Konvertiert die Zahlen x, y und z zu Hexadezimal und gibt diese aus."""
+    return "(" + str(x) + ", " + str(y) + ", " + str(z) + ") = (stat" + format(x, 'x') + ", " + format(y, 'x') + ", " + format(z, 'x') + ")"
 
 # Das Else wird dann wirksam wenn die for loop erfolgreich
 # durchläuft und nicht durch ein break oder return beendet wird.
@@ -44,6 +51,7 @@ def to_str(x, y, z):
 # Ist es vorhanden, wird die Loop durch ein return beendet -> kein else
 # Ist es nicht vorhanden, läuft die schleife komplett durch -> else
 def demo_loop_else():
+    """Stellt ein Beispiel für eine for/else loop dar."""
     items = ["banane", "apfel", "birne"]
     for item in items:
         if item == "banane":
@@ -52,6 +60,7 @@ def demo_loop_else():
         return("item nicht gefunden")
 
 def main_method():
+    """Main Methode zum printen aller Funktionen."""
     print("sum_equals:")
     print(sum_equals([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]))
     print("\ncount_int:")
