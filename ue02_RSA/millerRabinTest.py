@@ -23,4 +23,4 @@ def miller_rabin(n, k):
             return False
     return True
 
-print(miller_rabin(36, 2))
+print(miller_rabin(37, 12))
