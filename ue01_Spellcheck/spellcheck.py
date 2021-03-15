@@ -1,8 +1,6 @@
 #!/usr/bin/python3
 
-# HTL3R, 2018/19, 4CN SEW
-# Lorenz Stechauner
-# UE05: Fraction
+# Sebastian Slanitsch, 4CN
 
 """
 >>> correct('lherer')
