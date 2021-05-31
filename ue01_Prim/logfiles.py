@@ -19,6 +19,9 @@ WINDOWS_VERSIONS = {
 
 
 class Record:
+    """
+    gathers all information about one record line
+    """
     def __init__(self, line):
         m = re.match(APACHE_LOG_PATTERN, line)
         if not m:
@@ -71,15 +74,22 @@ class Record:
 
 
 def open_files(filenames):
+    """
+    open a file with given file name
+    :param filenames: file to open
+    """
     for filename in filenames:
         if filename.endswith('.gz') or filename.endswith('.zip'):
             yield gzip.open(filename, 'r')
         else:
             yield open(filename, 'rb')
-#b weggeben ist unnedig
 
 
 def read_lines(files):
+    """
+    read all lines from given files
+    :param files: files to read from
+    """
     for file in files:
         for line in file.readlines():
             try:
@@ -90,15 +100,29 @@ def read_lines(files):
 
 
 def parse_lines(lines):
+    """
+    parse all lines with record class to seperate information
+    :param lines:
+    """
     for line in lines:
         yield Record(line)
 
 
 def get_bytes(records):
+    """
+    get bytes from all recors
+    :param records: records to read from
+    :return: bytes
+    """
     return sum(r.transferred for r in records)
 
 
 def get_most_active_source(records):
+    """
+    get the most active source in all records
+    :param records: records to read from
+    :return: most active source
+    """
     sources = {}
     for r in records:
         sources[r.source] = sources.get(r.source, 0) + 1
@@ -111,6 +135,11 @@ def get_most_active_source(records):
 
 
 def get_most_surfed_page(records):
+    """
+    get most visited page in all records
+    :param records: records to observe
+    :return: most visited page
+    """
     uris = {}
     for r in records:
         if r.code != 408:
