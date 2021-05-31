@@ -1,5 +1,3 @@
-# Jakob Bachl 4CN
-
 """
 >>> is_prime_miller_rabin(1234567892)
 False

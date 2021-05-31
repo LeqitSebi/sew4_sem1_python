@@ -1,5 +1,4 @@
-from bachl.sew4_sem1_python.ue04_rsa.generate_keys import generate_keys
-from bachl.sew4_sem1_python.ue04_rsa.file_to_ints import file2ints
+
 import os
 
 def keygen(length, verbosity=False, outputfile="keys.txt"):

@@ -1,7 +1,7 @@
 import argparse
 import sys
 
-from slanitsch.ue02_RSA.encryption import *
+from slanitsch.ue02_RSA.encryption import keygen, encrypt, decrypt
 
 sys.path.insert(0, "../../..")
 

@@ -113,6 +113,9 @@ def get_bytes(records):
     get bytes from all recors
     :param records: records to read from
     :return: bytes
+
+    >>> get_bytes(parse_lines(read_lines('../resources/access.log')))
+    379780263
     """
     return sum(r.transferred for r in records)
 
@@ -122,6 +125,9 @@ def get_most_active_source(records):
     get the most active source in all records
     :param records: records to read from
     :return: most active source
+
+    >>> get_most_active_source(parse_lines(read_lines('../resources/access.log')))
+    213.208.148.212
     """
     sources = {}
     for r in records:
@@ -139,6 +145,9 @@ def get_most_surfed_page(records):
     get most visited page in all records
     :param records: records to observe
     :return: most visited page
+
+    >>> get_most_active_source(parse_lines(read_lines('../resources/access.log')))
+    /
     """
     uris = {}
     for r in records:
@@ -154,9 +163,9 @@ def get_most_surfed_page(records):
 
 
 if __name__ == '__main__':
-    files = open_files(['access.log'])
+    files = open_files(['../resources/access.log'])
     lines = read_lines(files)
     records = parse_lines(lines)
-   # print(get_bytes(records))
-    print(get_most_active_source(records))
-    #print(get_most_surfed_page(records))
+    #print(get_bytes(records))
+    #print(get_most_active_source(records))
+    print(get_most_surfed_page(records))

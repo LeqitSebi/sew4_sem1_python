@@ -1,4 +1,3 @@
-# Jakob Bachl 4CN
 
 """
 >>> keys = generate_keys(1024)

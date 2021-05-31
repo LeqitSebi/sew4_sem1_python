@@ -1,4 +1,3 @@
-# Jakob Bachl 4CN
 
 def file2ints(path, length):
     """
