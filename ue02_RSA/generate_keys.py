@@ -11,8 +11,10 @@
 True
 """
 
-from bachl.sew4_sem1_python.ue04_rsa.millerRabin import generate_prime
 import secrets
+
+from slanitsch.ue02_RSA.millerRabin import generate_prime
+
 
 def extended_gcd(a, b):
     """

@@ -1,6 +1,10 @@
 
 import os
 
+from slanitsch.ue02_RSA.file_to_ints import file2ints
+from slanitsch.ue02_RSA.generate_keys import generate_keys
+
+
 def keygen(length, verbosity=False, outputfile="keys.txt"):
     """
     Generiert Keys in keys.txt
