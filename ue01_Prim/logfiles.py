@@ -161,6 +161,22 @@ def get_most_surfed_page(records):
     print(max_req)
     return max_uri
 
+def get_most_used_os(records):
+    """
+    get most used os in all records
+    :param records: records to observe
+    :return: most used operation system
+    """
+    systems = {}
+    for r in records:
+        systems[r.os] = systems.get(r.os, 0) + 1
+    max_req = 0
+    max_system = None
+    for k, v in systems.items():
+        if v > max_req:
+            max_req, max_source = v, k
+    return max_system
+
 
 if __name__ == '__main__':
     files = open_files(['../resources/access.log'])

@@ -1,7 +1,7 @@
 
 import os
 
-from slanitsch.ue02_RSA.file_to_ints import file2ints
+from .file_to_ints import file2ints
 from slanitsch.ue02_RSA.generate_keys import generate_keys
 
 
