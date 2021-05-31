@@ -110,6 +110,17 @@ def get_most_active_source(records):
             max_req, max_source = v, k
     return max_source
 
+def get_most_used_os(records):
+    systems = {}
+    for r in records:
+        systems[r.os] = systems.get(r.os, 0) + 1
+    max_req = 0
+    max_os = None
+    for k,v in systems.items():
+        if v > max_req:
+            max_req, max_os = v,k
+    return max_os
+
 
 def get_most_surfed_page(records):
     uris = {}
@@ -121,14 +132,12 @@ def get_most_surfed_page(records):
     for k,v in uris.items():
         if v > max_req:
             max_req, max_uri = v, k
-    print(max_req)
+    #print(max_req)
     return max_uri
 
 
 if __name__ == '__main__':
-    files = open_files(['res/access.log', 'res/access_log', 'res/access.log.10.gz'])
+    files = open_files(['../resources/access.log'])
     lines = read_lines(files)
     records = parse_lines(lines)
-    print(get_bytes(records))
-    #print(get_most_active_source(records))
-    #print(get_most_surfed_page(records))
+    print(get_most_used_os(records))

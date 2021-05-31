@@ -23,7 +23,6 @@ def is_prime_miller_rabin(n, k):
             return False
     return True
 
-
 def is_prime(number: int) -> bool:
     if number <= 1:
         raise ValueError('Number can not be checked to be a prime number')
@@ -44,7 +43,7 @@ def generate_prime(bits: int, urandom: bool = False) -> int:
     if bits < 8:
         raise ValueError('Number of bits should be not smaller than 8 to provide realistic prime numbers')
     mask1 = 1 | 1 << (bits - 1)
-    mask2 = ~(~0 << (bits - 1))
+    mask2 = ~(1 << (bits))
     while True:
         if urandom:
             n = int.from_bytes(os.urandom(bits // 8 + 1), byteorder='big', signed=False) & mask2 | mask1

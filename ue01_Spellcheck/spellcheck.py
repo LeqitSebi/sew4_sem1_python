@@ -2,17 +2,6 @@
 
 # Sebastian Slanitsch, 4CN
 
-"""
->>> correct('lherer')
-{'lehrer'}
->>> correct('shcule')
-{'schule'}
->>> correct('wnad')
-{'wand'}
->>> correct('tischplate')
-{'tischplatte'}
-"""
-
 import string
 
 
@@ -30,7 +19,6 @@ def split_word(word):
     [('', 'abc'), ('a', 'bc'), ('ab', 'c'), ('abc', '')]
     """
     return [[word[:i].lower(), word[i:].lower()] for i in range(len(word) + 1)]
-
 
 def edit1(word):
     variations = split_word(word.lower())
@@ -64,4 +52,5 @@ def correct(word):
 
 dictionary = read_all_words('/usr/share/dict/ngerman')
 
-print(correct('lherer'))
+print(correct("wand"))
+print(correct('ffae'))

@@ -1,9 +1,24 @@
 from __future__ import annotations
-from slanitsch.ue02_RSA.miller_rabin import generate_prime
 import os
 import math
 import argparse
 import sys
+from random import random
+
+parser = argparse.ArgumentParser()
+
+parser.add_argument('action', choices=['encrypt', 'decrypt', 'generate-keys'])
+parser.add_argument('-k', '--key-file', required=False,
+                    help='The key file, the data should be encrypted/decrypted')
+parser.add_argument('--private-key', required=False,
+                    help='The file, the private key should be saved in')
+parser.add_argument('--public-key', required=False,
+                    help='The file, the public key should be saved in')
+parser.add_argument('-l', '--key-length', required=False, type=int,
+                    help='The RSA bit length')
+parser.add_argument('-i', '--input-file', required=False)
+parser.add_argument('-o', '--output-file', required=False)
+args = parser.parse_args()
 
 
 def generate_keys(bits):
@@ -94,6 +109,7 @@ def generate_keys(bits):
         ...     assert x == y
         """
         while True:
+            from slanitsch.ue02_RSA.miller_rabin import generate_prime
             p = generate_prime(math.ceil(bits / 2), urandom=(not insecure))
             q = generate_prime(math.floor(bits / 2), urandom=(not insecure))
             if p == q:
@@ -111,59 +127,48 @@ def generate_keys(bits):
                 pass
         return Key(e, n, bits), Key(d, n, bits)
 
-    if __name__ == '__main__':
-        parser = argparse.ArgumentParser()
-        parser.add_argument('action', choices=['encrypt', 'decrypt', 'generate-keys'])
-        parser.add_argument('-k', '--key-file', required=False,
-                            help='The key file, the data should be encrypted/decrypted')
-        parser.add_argument('--private-key', required=False,
-                            help='The file, the private key should be saved in')
-        parser.add_argument('--public-key', required=False,
-                            help='The file, the public key should be saved in')
-        parser.add_argument('-l', '--key-length', required=False, type=int,
-                            help='The RSA bit length')
-        parser.add_argument('-i', '--input-file', required=False)
-        parser.add_argument('-o', '--output-file', required=False)
-        args = parser.parse_args()
+    print("before")
 
-        if args.action == 'generate-keys':
-            if args.key_length is None:
-                parser.error('action generate-keys requires --key-length')
-            private_file = args.private_key or 'priv.key'
-            public_file = args.public_key or 'pub.key'
-            pub, priv = generate_keys(args.key_length)
-            pub.save_to_file(public_file)
-            priv.save_to_file(private_file)
-        elif args.action == 'encrypt':
-            if args.input_file is None or args.output_file is None:
-                parser.error('action encrypt requires --input-file and --output-file')
-            key_file = args.key_file or 'priv.key'
-            key = Key.load_from_file(key_file)
-            input_file = open(args.input_file, 'rb')
-            output_file = open(args.output_file, 'wb+')
-            while True:
-                data = input_file.read(key.key_byte_length - 1)
-                if len(data) == 0:
-                    break
-                output_file.write(key.encrypt(data))
-            output_file.close()
-        elif args.action == 'decrypt':
-            if args.input_file is None or args.output_file is None:
-                parser.error('action decrypt requires --input-file and --output-file')
-            key_file = args.key_file or 'pub.key'
-            key = Key.load_from_file(key_file)
-            input_file = open(args.input_file, 'rb')
-            output_file = open(args.output_file, 'wb+')
-            input_file.seek(0, 2)
-            file_size = input_file.tell()
-            input_file.seek(0, 0)
-            while True:
-                data = input_file.read(key.key_byte_length)
-                if len(data) == 0:
-                    break
-                last = input_file.tell() == file_size or len(data) != key.key_byte_length
-                output_file.write(key.decrypt(data, last=last))
-            output_file.close()
-        else:
-            print('Invalid action!', file=sys.stderr)
-            exit(1)
+    if args.action == 'generate-keys':
+        if args.key_length is None:
+            parser.error('action generate-keys requires --key-length')
+        private_file = args.private_key or 'priv.key'
+        public_file = args.public_key or 'pub.key'
+        pub, priv = generate_keys(args.key_length)
+        pub.save_to_file(public_file)
+        priv.save_to_file(private_file)
+    elif args.action == 'encrypt':
+        if args.input_file is None or args.output_file is None:
+            parser.error('action encrypt requires --input-file and --output-file')
+        key_file = args.key_file or 'priv.key'
+        key = Key.load_from_file(key_file)
+        input_file = open(args.input_file, 'rb')
+        output_file = open(args.output_file, 'wb+')
+        while True:
+            data = input_file.read(key.key_byte_length - 1)
+            if len(data) == 0:
+                break
+            output_file.write(key.encrypt(data))
+        output_file.close()
+    elif args.action == 'decrypt':
+        if args.input_file is None or args.output_file is None:
+            parser.error('action decrypt requires --input-file and --output-file')
+        key_file = args.key_file or 'pub.key'
+        key = Key.load_from_file(key_file)
+        input_file = open(args.input_file, 'rb')
+        output_file = open(args.output_file, 'wb+')
+        input_file.seek(0, 2)
+        file_size = input_file.tell()
+        input_file.seek(0, 0)
+        while True:
+            data = input_file.read(key.key_byte_length)
+            if len(data) == 0:
+                break
+            last = input_file.tell() == file_size or len(data) != key.key_byte_length
+            output_file.write(key.decrypt(data, last=last))
+        output_file.close()
+    else:
+        print('Invalid action!', file=sys.stderr)
+        exit(1)
+
+    print("after")
